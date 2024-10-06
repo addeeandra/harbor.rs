@@ -12,14 +12,14 @@ pub fn read_from_stub(name: &str) -> String {
     content
 }
 
-pub fn read_service_from_file(name: &str) -> Service {
+pub fn read_service_from_stub(name: &str) -> Service {
     let content = read_from_stub(name);
     let service: Service = serde_yaml::from_str(&content).expect("Failed to parse YAML");
 
     service
 }
 
-pub fn read_network_from_file(name: &str) -> Network {
+pub fn read_network_from_stub(name: &str) -> Network {
     let content = read_from_stub(name);
     let network: Network = serde_yaml::from_str(&content).expect("Failed to parse YAML");
 

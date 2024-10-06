@@ -1,4 +1,6 @@
+use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
+use crate::{reader};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct DockerCompose {
@@ -42,4 +44,31 @@ pub struct HealthCheck {
 pub struct Network {
     #[serde(skip_serializing_if = "Option::is_none")]
     driver: Option<String>,
+}
+
+pub fn generate_compose(service_names: Vec<String>) -> DockerCompose {
+    let mut service_map = HashMap::new();
+    let mut volume_map = HashMap::new();
+
+    for service_name in service_names {
+        let service = reader::read_service_from_stub(&service_name);
+        service_map.insert(service_name, service.clone());
+
+        if let Some(volume) = service.volumes {
+            for volume_name in volume {
+                let volume_key = volume_name.split(":").collect::<Vec<&str>>()[0].to_string();
+                volume_map.insert(volume_key, None);
+            }
+        }
+    }
+
+    let network = reader::read_network_from_stub(&String::from("_network"));
+
+    DockerCompose {
+        services: service_map,
+        networks: HashMap::from([
+            (String::from("harbor"), network)
+        ]),
+        volumes: Some(volume_map),
+    }
 }
