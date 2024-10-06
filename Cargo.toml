@@ -3,6 +3,16 @@ name = "harbor-rs"
 version = "0.1.0"
 edition = "2021"
 
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+path = "src/cli.rs"
+name = "harbor-rs"
+
 [dependencies]
+clap = { version = "4.0", features = ["derive"] }
 serde = { version = "1.0", features = ["derive"] }
-serde_yaml = "0.8"
+serde_yaml = "0.9"
+r3bl_tuify = "0.1.27"
+r3bl_rs_utils_core = "0.9.16"
