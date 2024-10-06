@@ -1,83 +1,52 @@
 <p align="center">
     <h1 align="center">Harbor.rs</h1>
-    <p align="center">Running Docker Environment</p>
+    <p align="center">Generate Docker Compose</p>
 </p>
 
 ------
 
 ## Usage
 
-Usage instruction here.
+Harbor helps you generate `docker-compose.yml` with single command.
 
 ## Basic Commands
 
-To be available.
-
-> [!WARNING]
-> Basic commands are not available yet.
-
-#### Show help
-
 ```bash
-./harbor --help # or [ -h ]
+./harbor --<command> <args>
 ```
 
-#### Initialize Environment
+#### Show Helps
 
 ```bash
-# generating docker-compose.yml for general-purpose
-./harbor init
-
-# generating docker-compose.yml file for laravel environment that include `artisan` command
-./harbor init laravel
-
-# shows harbor environment information
-./harbor info
+./harbor --help
 ```
 
-#### Start and Stop
+#### Generate
 
 ```bash
-# start environment
-./harbor start # or [ up ] which equivalent to `docker compose up -d`
-
-# restart environment
-./harbor restart # which equivalent to `docker compose restart`
-
-# stop and remove all containers
-./harbor stop # or [ down ] which equivalent to `docker compose down`
+# generating docker-compose.yml with mysql and redis
+./harbor --ship [<image-tags> ...]
 ```
-
-#### Container's Command
 
 ```bash
-# equivalent to `docker compose exec -it <container> <command>`
-./harbor exec <container> <command>
+# generating docker-compose.yml with mysql and redis
+./harbor --ship mysql redis
 
-# equivalent to `docker compose exec -it <container> bash`
-./harbor ssh <container>
+# generating docker-compose.yml with postgresql and redis
+./harbor --ship pgsql redis
+
+# generating docker-compose.yml with mariadb, redis and mailpit
+./harbor --ship mariadb redis mailpit
 ```
 
-#### Laravel Command
+## Available Images
 
-Environment specific commands.
+#### List of Tags
 
-```bash
-# running `php` command
-./harbor php <command>
-
-# running `composer` command
-./harbor composer <command> # or [ comp ]
-
-# running `artisan` command
-./harbor artisan <command> # or [ art ]
-
-# running `npm` command
-./harbor npm <command>
-
-# running `yarn` command
-./harbor yarn <command>
-
-# running `npx` command
-./harbor npx <command>
-```
+|  Tag | Image |
+| --- | --- |
+| mysql | mysql/mysql-server:8.0 |
+| pgsql | postgres:15 |
+| mariadb | mariadb:11 |
+| redis | redis:alpine |
+| mailpit | axllent/mailpit:latest |
